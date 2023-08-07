@@ -1,0 +1,1001 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>14. Executables and Processes &#8212; UndertheCovers</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script async="async" kind="hypothesis" src="https://hypothes.is/embed.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'assembly/UnixAssemblyProgramming';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="15. Machine Debuggers &amp; Open Process Surgery" href="Debuggers.html" />
+    <link rel="prev" title="13. The von Neumann Architecture" href="vonNeumannArchitecture.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+  
+
+<a class="navbar-brand logo" href="../intro_tb.html">
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.jpg" class="logo__image only-light" alt="Logo image"/>
+    <script>document.write(`<img src="../_static/logo.jpg" class="logo__image only-dark" alt="Logo image"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro_tb.html">
+                    Under the Covers : The Secret Life of Software
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">How to read this book</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../howto.html">How to read this book</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">The Unix Development Environment</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../unix/intro.html">1. Operating Systems and UNIX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../unix/terminal.html">2. What is a Terminal and why do we still use them?</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../unix/files.html">3. Organizing and Managing Information as a Tree of Files and Directories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../unix/shellintro.html">4. The Shell - Part I: Having an ASCII conversation with the OS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../unix/shelldetails.html">5. The Shell - Part II: Some UNIX details</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../unix/editors.html">6. Editors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../unix/processes.html">7. Processes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../unix/ides.html">8. IDEs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../unix/make.html">9. Make</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../unix/gitintro.html">10. Intro to Git</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../unix/git.html">11. Git</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">The Belly of the Beast: The von Neumann Architecture and Assembly Programming</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="intro.html">12. Introduction: Assembly Programming</a></li>
+<li class="toctree-l1"><a class="reference internal" href="vonNeumannArchitecture.html">13. The von Neumann Architecture</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">14. Executables and Processes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Debuggers.html">15. Machine Debuggers &amp; Open Process Surgery</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assembly.html">16. Lets write some assembly code</a></li>
+<li class="toctree-l1"><a class="reference internal" href="InfoRepI.html">17. Representing information - Preliminaries: Bits, Bytes and Notation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nativetypes.html">18. Information Representation - Native Types</a></li>
+<li class="toctree-l1"><a class="reference internal" href="anatomyI.html">19. Assembly : Program Anatomy I</a></li>
+<li class="toctree-l1"><a class="reference internal" href="anatomyII.html">20. Program Anatomy II : Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="anatomyIII.html">21. Program Anatomy III : Code as Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="anatomyIV.html">22. Program Anatomy IV: The Tree of Bytes and Data Structures</a></li>
+<li class="toctree-l1"><a class="reference internal" href="assemblyOS.html">23. Assembly using the OS</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Into the Light : C Programming</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../C/intro.html">24. Introduction</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Specific Material</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../BUCS210_intro.html">BU CS210 Overview</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/jappavoo/UndertheCovers" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jappavoo/UndertheCovers/edit/main/underthecovers/assembly/UnixAssemblyProgramming.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/jappavoo/UndertheCovers/issues/new?title=Issue%20on%20page%20%2Fassembly/UnixAssemblyProgramming.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/assembly/UnixAssemblyProgramming.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script>
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Executables and Processes</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-executables">14.1. “Running” Executables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-s-inside-an-executable">14.2. What’s inside an executable</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-does-ls-tell-us-about-ls">14.2.1. What does ls tell us about ls ;-)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#can-we-display-its-contents-to-the-terminal-with-cat">14.2.2. Can we display its contents to the Terminal with <code class="docutils literal notranslate"><span class="pre">cat</span></code>?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lets-look-at-the-byte-values-of-bin-ls-using-xxd">14.2.3. Lets look at the byte values of <code class="docutils literal notranslate"><span class="pre">/bin/ls</span></code> using <code class="docutils literal notranslate"><span class="pre">xxd</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-unix-file-command-on-bin-ls">14.2.4. Using the UNIX <code class="docutils literal notranslate"><span class="pre">file</span></code> command on <code class="docutils literal notranslate"><span class="pre">/bin/ls</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#elf-files-executable-and-linking-format-files">14.2.5. ELF Files - Executable and Linking Format Files</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#executing-an-executable-in-a-process">14.3. Executing an Executable in a Process</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-executables-as-process-images">14.4. Binary Executables as Process Images.</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#process-contexts">14.4.1. Process Contexts</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#context-switch-scheduling-processes">14.4.1.1. Context Switch – Scheduling Processes</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#executables-initial-images-for-creating-process-contexts">14.4.2. Executables: Initial Images for creating Process Contexts</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-executables">14.5. Creating executables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assemblers">14.5.1. Assemblers</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gnu-assembler-gas">14.5.1.1. GNU Assembler (gas)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linkers">14.5.2. Linkers</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gnu-linker-ld">14.5.2.1. GNU Linker (ld)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-and-using-our-first-executable">14.5.3. Creating and using our first executable.</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-source-code">14.5.3.1. The source code</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#assembling-the-source-into-an-object-file">14.5.3.2. Assembling the source into an object file</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#linking-the-object-file-into-an-executable">14.5.3.3. Linking the object file into an executable</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#running-the-executable">14.5.3.4. Running the executable</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#segmentation-fault">14.5.3.5. Segmentation Fault</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#using-empty-with-gdb">14.5.3.6. Using empty with gdb</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-code-to-create-an-executable-for-a-larger-empty-process">14.5.4. The code to create an executable for a larger empty process</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="executables-and-processes">
+<h1><span class="section-number">14. </span>Executables and Processes<a class="headerlink" href="#executables-and-processes" title="Permalink to this heading">#</a></h1>
+<p>In this chapter we will explore what “native” binary programs are and begin our journey to learning how to create them though assembly programming.</p>
+<p>This chapter follows two approaches to this material.  In the first part we take an self-guided discovery approach.  Here we use our knowledge and access to UNIX to follow our noses and poke around an executable to see what we can learn. In the second part of the chapter we take a more traditional textbook approach and present the conceptual model for how executables and processes relate to each other.</p>
+<p><strong>The following chapter includes several manual page entries.  A reader is not expected to read these completely.  They are mainly hear to illustrate how we can learn about the detail and document the precise way we can look them up later when we need too.  In general you should skip the first few paragraphs.  If there details that you should pickup on now the text will point you to them</strong></p>
+<section id="running-executables">
+<h2><span class="section-number">14.1. </span>“Running” Executables<a class="headerlink" href="#running-executables" title="Permalink to this heading">#</a></h2>
+<p>Perhaps the most basic thing we do on a computer is run programs.  As we have seen, on UNIX, one of the main purposes of the shell is to let us start and manage running programs – Processes.  As a recap remember that when we type a command like <code class="docutils literal notranslate"><span class="pre">ls</span></code> into a shell, it is not a built-in command. The shell will look to see if a file, with a matching name, exists in the list of directories specified by the <code class="docutils literal notranslate"><span class="pre">PATH</span></code> environment variable.  If one is found (eg <code class="docutils literal notranslate"><span class="pre">/bin/ls</span></code>), and it’s meta data marks it as “executable”, the shell process will make calls to the UNIX kernel to create a new child process and try and “run” the file within the new process.</p>
+<div class="cell tag_remove-input docutils container">
+</div>
+<p>As the figures state, there are two basic kinds of files that the kernel knows how to “execute” within a process.  One is an ASCII file that has a special string at its beginning – <code class="docutils literal notranslate"><span class="pre">#!&lt;path</span> <span class="pre">of</span> <span class="pre">interpreter&gt;</span></code> and the other is an <strong>executable</strong>.  The former is just a convenient way to allow programs like the shell to automatically be started with the contents of the file passed to it as a script to interpret.  This makes it easy to write “scripts” that behave as if they where programs of their own.  When in reality they are being interpreted as commands to the “real” program specified on the first line of the file.  But the question, of course, is what exactly are real programs or <strong>executables</strong>.</p>
+</section>
+<section id="what-s-inside-an-executable">
+<h2><span class="section-number">14.2. </span>What’s inside an executable<a class="headerlink" href="#what-s-inside-an-executable" title="Permalink to this heading">#</a></h2>
+<p>Lets explore the <code class="docutils literal notranslate"><span class="pre">/bin/ls</span></code> file using our UNIX skills to see what we can figure out.</p>
+<section id="what-does-ls-tell-us-about-ls">
+<h3><span class="section-number">14.2.1. </span>What does ls tell us about ls ;-)<a class="headerlink" href="#what-does-ls-tell-us-about-ls" title="Permalink to this heading">#</a></h3>
+<div class="cell tag_remove-input docutils container">
+</div>
+<p>Running using ls to list the meta data of the file <code class="docutils literal notranslate"><span class="pre">/bin/ls</span></code> we see that it contains a sizable number of bytes.  We also see that the permissions clearly mark it as being executable by all users of the system <code class="docutils literal notranslate"><span class="pre">-rwxr-x-rx</span></code> (if you don’t remember how to read this output see <code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">ls</span></code>).</p>
+</section>
+<section id="can-we-display-its-contents-to-the-terminal-with-cat">
+<h3><span class="section-number">14.2.2. </span>Can we display its contents to the Terminal with <code class="docutils literal notranslate"><span class="pre">cat</span></code>?<a class="headerlink" href="#can-we-display-its-contents-to-the-terminal-with-cat" title="Permalink to this heading">#</a></h3>
+<p>We encourage you to open a terminal and give this a shot.  What happened?  Well remember that all bytes that are sent to terminal are interpreted by the terminal as ASCII encoded information.  It should be quickly apparent to you that whatever <code class="docutils literal notranslate"><span class="pre">/bin/ls</span></code> is it is NOT predominantly ASCII encoded information!  Rather the bytes in it must be of some other kind of binary representation.</p>
+<p>Below we pass the <code class="docutils literal notranslate"><span class="pre">-v</span></code> flag to <code class="docutils literal notranslate"><span class="pre">cat</span></code> so that it converts the non-ASCII values (things the terminal will not be able to print) in <code class="docutils literal notranslate"><span class="pre">/bin/ls</span></code> into a sequence of printable characters that represent their value,  Specifically it using ‘^’ and ‘M-’ as prefixes followed by another character.  You can see the man page of <code class="docutils literal notranslate"><span class="pre">cat</span></code> and the <span class="xref myst">ASCII Table</span> for more information.</p>
+<div class="cell tag_remove-input tag_output_scroll docutils container">
+</div>
+</section>
+<section id="lets-look-at-the-byte-values-of-bin-ls-using-xxd">
+<h3><span class="section-number">14.2.3. </span>Lets look at the byte values of <code class="docutils literal notranslate"><span class="pre">/bin/ls</span></code> using <code class="docutils literal notranslate"><span class="pre">xxd</span></code><a class="headerlink" href="#lets-look-at-the-byte-values-of-bin-ls-using-xxd" title="Permalink to this heading">#</a></h3>
+<p>So while the data in <code class="docutils literal notranslate"><span class="pre">/bin/ls</span></code> does not seem to be encoded in ASCII we can use other UNIX tools to translate the individual bytes of the file into a numeric ASCII value so that we can at least see what the values of the bytes of the file are.  There are several such tools we could use. Examples include: <code class="docutils literal notranslate"><span class="pre">od</span></code> (octal dump), <code class="docutils literal notranslate"><span class="pre">hexdump</span></code>, and <code class="docutils literal notranslate"><span class="pre">xxd</span></code>.  We will use <code class="docutils literal notranslate"><span class="pre">xxd</span></code></p>
+<div class="cell tag_remove-input tag_output_scroll docutils container">
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">xxd</span></code> conveniently lets us look at the value of a file represented in base 2 binary digits or base 16 hexadecimal digits.   We will use the following command to display the first 256 bytes of the file in binary: <code class="docutils literal notranslate"><span class="pre">xxd</span> <span class="pre">-l</span> <span class="pre">256</span> <span class="pre">-g</span> <span class="pre">1</span> <span class="pre">-c</span> <span class="pre">8</span> <span class="pre">-b</span> <span class="pre">/bin/ls</span></code></p>
+<p>Where:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">-l</span> <span class="pre">256</span></code> is used to restrict ourselves to the first 80 bytes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-g</span> <span class="pre">1</span></code> is used to tell xxd to work on units/groups of single bytes</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-c</span> <span class="pre">8</span></code> is used to print 8 units/groups per line</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">-b</span></code> means display the values in base 2 (binary) notation</p></li>
+</ul>
+<p>This causes <code class="docutils literal notranslate"><span class="pre">xxd</span></code> to open <code class="docutils literal notranslate"><span class="pre">/bin/ls</span></code> and read the first 256 bytes.  It examines the value of each byte read and translates it so that it produces a string of eight ASCII characters of either <code class="docutils literal notranslate"><span class="pre">0</span></code> or <code class="docutils literal notranslate"><span class="pre">1</span></code> depending on the value of the bits of the byte.  In this way we can use <code class="docutils literal notranslate"><span class="pre">xxd</span></code> to display the byte values of a file.  The left hand column of the output encodes the byte position in the file that the line of data corresponds too.  These position values start at zero are in hexadecimal notation (eg. <code class="docutils literal notranslate"><span class="pre">00000010</span></code> is 16 in decimal).  On the far right of each line <code class="docutils literal notranslate"><span class="pre">xxd</span></code> prints an ASCII interpretation for any byte values that correspond to printable ASCII characters (otherwise it prints a <code class="docutils literal notranslate"><span class="pre">.</span></code>).</p>
+<div class="cell tag_remove-input tag_output_scroll docutils container">
+</div>
+<p>Using hexadecimal notation we get more concise visual representation</p>
+<div class="cell tag_remove-input tag_output_scroll docutils container">
+</div>
+<p>So while it might look cool, without knowing how to interpret the byte values it really does not provide us much insight as to what makes this file a program that lists the contents of directories.</p>
+</section>
+<section id="using-the-unix-file-command-on-bin-ls">
+<h3><span class="section-number">14.2.4. </span>Using the UNIX <code class="docutils literal notranslate"><span class="pre">file</span></code> command on <code class="docutils literal notranslate"><span class="pre">/bin/ls</span></code><a class="headerlink" href="#using-the-unix-file-command-on-bin-ls" title="Permalink to this heading">#</a></h3>
+<p>While there are no explicit file types in UNIX that tell use what kind of information is in a file (we are expected to know) there is a command that is very good at examining a file and guessing what kind of information is encoded in the file based on a large database of test.  This command is called <code class="docutils literal notranslate"><span class="pre">file</span></code>.  Here is its manual page.</p>
+<div class="cell tag_remove-input tag_output_scroll docutils container">
+</div>
+<p>Well let’s see what <code class="docutils literal notranslate"><span class="pre">file</span></code> has to say about <code class="docutils literal notranslate"><span class="pre">/bin/ls</span></code>.</p>
+<div class="cell tag_remove-input docutils container">
+</div>
+<p>Ok cool!  File tells us <code class="docutils literal notranslate"><span class="pre">/bin/ls</span></code> is an <strong>ELF</strong> file.  You might have noticed that the xxd output showed the ASCII characters <code class="docutils literal notranslate"><span class="pre">ELF</span></code> near the beginning of the file.  This is due to the fact that this is part of the <code class="docutils literal notranslate"><span class="pre">ELF</span></code> standard format to make recognition of them easier.</p>
+</section>
+<section id="elf-files-executable-and-linking-format-files">
+<h3><span class="section-number">14.2.5. </span>ELF Files - Executable and Linking Format Files<a class="headerlink" href="#elf-files-executable-and-linking-format-files" title="Permalink to this heading">#</a></h3>
+<p>So what exactly is an ELF file?  Lets see what the manuals have to say. P.S. You are not expected to understand what it is saying at this point.</p>
+<div class="cell tag_remove-input tag_output_scroll docutils container">
+</div>
+<p>Wow, that’s a lot of information that does not make much sense at this point.  However, it is nice to see that it seems to be a format for encoding “executable” files ;-)</p>
+<p>Now, as it turns out, there several tools such as <code class="docutils literal notranslate"><span class="pre">readelf</span></code> and <code class="docutils literal notranslate"><span class="pre">objdump</span></code> that are designed to decode <code class="docutils literal notranslate"><span class="pre">elf</span></code> files.  But it is not clear that this is going to help much until we get a better conceptual understanding of what it means to encode a program for execution in a process.</p>
+<p>For your interest here is the output for <code class="docutils literal notranslate"><span class="pre">readelf</span> <span class="pre">--all</span> <span class="pre">/bin/ls</span></code> and <code class="docutils literal notranslate"><span class="pre">objdump</span> <span class="pre">--all</span> <span class="pre">/bin/ls</span></code> which dump summary information about the <code class="docutils literal notranslate"><span class="pre">/bin/ls</span></code> executable.</p>
+<div class="cell tag_remove-input tag_output_scroll docutils container">
+</div>
+<div class="cell tag_remove-input tag_output_scroll docutils container">
+</div>
+<p>As a teaser here is some actual “content” that objdump can extract and decode from <code class="docutils literal notranslate"><span class="pre">/bin/ls</span></code>.  Specifically this command, <code class="docutils literal notranslate"><span class="pre">objdump</span> <span class="pre">-d</span> <span class="pre">/bin/ls</span></code> ‘disassembles’ the binary.</p>
+<div class="cell tag_remove-input tag_output_scroll docutils container">
+</div>
+</section>
+</section>
+<section id="executing-an-executable-in-a-process">
+<h2><span class="section-number">14.3. </span>Executing an Executable in a Process<a class="headerlink" href="#executing-an-executable-in-a-process" title="Permalink to this heading">#</a></h2>
+<p>Lets try this from the other direction.  We know that there is a call to the OS to run an executable.  Lets see what we can find out by examining the OS documentation.</p>
+<p>Lets start by looking up the manpage for the operating system call <code class="docutils literal notranslate"><span class="pre">exec</span></code>.  At this point we are going to ignore the programming syntax and mechanics and rather focus on what we can learn in broad strokes from the manual page.</p>
+<div class="cell tag_remove-input tag_output_scroll docutils container">
+</div>
+<blockquote>
+<div><p><a class="reference internal" href="../_images/fyi.svg"><img alt="../_images/fyi.svg" class="align-left" src="../_images/fyi.svg" width="40" /></a> <p style="background-color:powderblue;"> Notice in the above output we see line numbers for the man page. The <code class="docutils literal notranslate"><span class="pre">man</span></code> command itself does not support line numbers but the <code class="docutils literal notranslate"><span class="pre">cat</span></code> program does if you pass it the <code class="docutils literal notranslate"><span class="pre">-n</span></code> flag.  So instead of just using the command <code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">exec</span></code> on its own we have sent its output to <code class="docutils literal notranslate"><span class="pre">cat</span> <span class="pre">-n</span></code> using the pipe syntax of the shell:<code class="docutils literal notranslate"><span class="pre">|</span></code>.  So our combined shell command is:  <code class="docutils literal notranslate"><span class="pre">man</span> <span class="pre">exec</span> <span class="pre">|</span> <span class="pre">cat</span> <span class="pre">-n</span></code>.  Remember ot notice these things as UNIX can teach many good programming habits like the value of breaking our software down into small reusable parts and having a standard way for combining those parts (eg a pipe).</p>
+</div></blockquote>
+<p>We want to focus on the first two paragraphs of the description (lines 27 - 33).  These sentences imply that running a program loads a new “process image” over the current one.  Remember, in the Introduction we used the term memory image. It is not a random coincidence that we are seeing the same terminology here.  Further reading between the lines, the “file” to be executed contains or is the base of the new process image.  Given that this man page tells us that <code class="docutils literal notranslate"><span class="pre">exec</span></code> is really just a front end of <code class="docutils literal notranslate"><span class="pre">execve</span></code>, lets look at that man page and see if we can learn a little more.</p>
+<div class="cell tag_remove-input tag_output_scroll docutils container">
+</div>
+<p>Let’s focus on lines 13-21 and 41-43. Again, we see that the wording is all about replacing the contents of an existing process with the value from the executable file.  Further, we that some parts of the new process will be <code class="docutils literal notranslate"><span class="pre">newly</span> <span class="pre">initialized</span></code>: <em>stack</em>, <em>heap</em> and <em>data</em> <em>segments</em>. In lines 41-43 we are told that <code class="docutils literal notranslate"><span class="pre">execve</span></code>, assuming success, will overwrite certain parts of the <em>text</em>, <em>data</em> and <em>stack</em> of the process with the contents of the executable file (newly loaded program).  So, vaguely, we are starting to get the picture that an executable encodes values that get “loaded” into a process to initialize the execution of the program contained within it.</p>
+<p>Our task now is to start putting the pieces together.  We need to get a better idea of processes are, their relationship to binary executable files and how we go about encoding a program into an executable.</p>
+</section>
+<section id="binary-executables-as-process-images">
+<h2><span class="section-number">14.4. </span>Binary Executables as Process Images.<a class="headerlink" href="#binary-executables-as-process-images" title="Permalink to this heading">#</a></h2>
+<div class="cell tag_remove-input docutils container">
+</div>
+<p>Given our basic view of how a <a class="reference internal" href="vonNeumannArchitecture.html"><span class="doc std std-doc">von Neumann</span></a> computer operates we can see that what we load into memory drives the CPU’s execution.  But how does this relate to the what is going on when we are running an operating system like UNIX  which constructs a world of running software down into an OS kernel and a set of user processes?</p>
+<div class="cell tag_remove-input docutils container">
+</div>
+<p>From our perspective, as users of an operating system, we navigate the file system to find programs, in the form of executable files, to launch.  In UNIX we use a shell like bash to do this.  Bash on our behalf calls down into the UNIX Kernel requesting that it creates a new process from the specified executable file. In UNIX bash does this with two UNIX kernel system calls (fork and exec).</p>
+<div class="cell tag_remove-input docutils container">
+</div>
+<section id="process-contexts">
+<h3><span class="section-number">14.4.1. </span>Process Contexts<a class="headerlink" href="#process-contexts" title="Permalink to this heading">#</a></h3>
+<p>To better understanding of how processes, executables and the von Neumann model of execution relate, we need to dig down a little further.</p>
+<div class="cell tag_remove-input docutils container">
+</div>
+<p>Each time we ask the OS kernel to launch a binary executable, the kernel creates a new process “Context”.
+Each context is a collection of data structures that the kernel uses to represent the memory for the process and the CPU registers.   A process is like a restricted virtual von Neumann computer.</p>
+<section id="context-switch-scheduling-processes">
+<h4><span class="section-number">14.4.1.1. </span>Context Switch – Scheduling Processes<a class="headerlink" href="#context-switch-scheduling-processes" title="Permalink to this heading">#</a></h4>
+<p>Using the <span class="xref myst">privileged execution</span> features of the hardware the kernel “switches”, the contents on and off the real CPU and memory of the computer.</p>
+<p>To let a particular process execute, the kernel loads the GPRS of the CPU from the context and sets SPRS of the CPU so that all “normal” mode memory accesses are directed to the process context’s memory data structures.  Once these steps are done, the kernel resumes “normal” execution via a privileged instruction and the particular process will execute on the CPU in context of its own memory.</p>
+<p>When the kernel wants to switch which process is executing, it takes over the CPU, saves the values of the GPRS into the process context of the current process, and then follows the steps above to set a different context as the currently executing one.</p>
+<p>The act of picking which process to execute on the CPU and switching between them is called scheduling and is a core function of the operating system.  Processes are what lets us treat our computers like many little sub-computers, each which can execute based on an independent view of the CPU and memory.  While it is executing, the process has control of the CPU and can conduct memory transactions.</p>
+<p>From the perspective of the von Neumann architecture, the thing that the process is missing is the ability to conduct I/O.  This is on purpose to avoid the programs that run in processes needing to deal with the <a class="reference internal" href="vonNeumannArchitecture.html"><span class="doc std std-doc">The Ugly Underbelly</span></a> of I/O devices.  Rather, as we will see in other chapters to conduct I/O processes it makes requests to the kernel to control the I/O devices on it’s behalf.  The OS kernel hides the details of I/O from the process and ensures that I/O is carefully arbitrated between the multiple running processes.   In UNIX the core abstract primitive for I/O it provides processes are functions for creating, writing and reading files.</p>
+<p>The exact details of how processes, contexts and scheduling are implemented vary between operating systems and the details of the hardware.  The level of detail we have covered is enough for us to continue our exploration of how processes and executables are related.</p>
+</section>
+</section>
+<section id="executables-initial-images-for-creating-process-contexts">
+<h3><span class="section-number">14.4.2. </span>Executables: Initial Images for creating Process Contexts<a class="headerlink" href="#executables-initial-images-for-creating-process-contexts" title="Permalink to this heading">#</a></h3>
+<p>We can now put things together.   In the section above we discussed how the Kernel represents processes with context data structures and uses them to schedule the CPU across processes.  But where do the initial contents of memory for a process come from?</p>
+<p>This is the primary role that binary executables files serve.   Binaries are files that describe the initial memory contents for a process; the exact values that the process contexts data structures should be initialized with and their addresses.    From this perspective, an executable is the initial memory “image” that the OS “loads” into a newly created process context.  The reason we call it an image is that it is precise map that describes what the memory of a process should initially look like.  While the process executes the memory context will change and evolve diverging from the initial image of the executable.</p>
+<p>The figure below illustrates this relationship with a simple example.</p>
+<div class="cell tag_remove-input docutils container">
+</div>
+<p>At the bottom of the figure, four executable files are illustrated as colored document icons; 1) <code class="docutils literal notranslate"><span class="pre">/bin/ls</span></code> (orange), 2) <code class="docutils literal notranslate"><span class="pre">/bin/bash</span></code>, 3) <code class="docutils literal notranslate"><span class="pre">mypgm</span></code> (blue) and 4) <code class="docutils literal notranslate"><span class="pre">/bin/vim</span></code> (purple).  These files are located on the storage I/O devices. The rest of the diagram illustrates a UNIX kernel that is running four processes.  With the kernel, four contexts are shown, one for each process.  The memory of each context is colored with the color of the executable they were started with.  In this case <code class="docutils literal notranslate"><span class="pre">Context</span> <span class="pre">0</span></code> was initialized with <code class="docutils literal notranslate"><span class="pre">/bin/ls</span></code>, <code class="docutils literal notranslate"><span class="pre">Context</span> <span class="pre">1</span></code> and <code class="docutils literal notranslate"><span class="pre">Context</span> <span class="pre">2</span></code> from <code class="docutils literal notranslate"><span class="pre">/bin/bash</span></code> and finally <code class="docutils literal notranslate"><span class="pre">Context</span> <span class="pre">3</span></code> with an executable file called <code class="docutils literal notranslate"><span class="pre">mypgm</span></code>.  Above the kernel is the abstract view of the running processes that correspond to the contexts.  The kernel assigns each process a unique identifying number called a Process Identifier (pid).</p>
+<p>In UNIX the <code class="docutils literal notranslate"><span class="pre">ps</span></code> command lets us explore this view of the systems, listing the running process.  <code class="docutils literal notranslate"><span class="pre">ps</span></code> can display many attributes of the processes including the pid and the executable it was initialized with.</p>
+<p>Executables are used to initialize the memory for new process contents.  Many contents can be created from a single executable. Each process, after it is created, is an independent running instance of the executable.  In the figure, we can see that two processes have been started from the <code class="docutils literal notranslate"><span class="pre">bash</span></code> executable.    As the processes execute, they modify their memory contexts but the original executable is not modified and is preserved as a starting point for any new contexts started from it.   This is how we can have many independent “shell” processes running all spawned from the same binary.   Note that while many independent processes can be running at a given time, started from one or more executables, there is always only one OS kernel running that manages these processes.</p>
+<p>Once initialized the process contents are scheduled by the OS onto the CPU and memory, as described in the prior section, and continue executing until they terminate.</p>
+<p>So now that we know how executables relate to processes, what  remains is learning how to create executables. Then we will be able to start processes from images that we constructed.  Once we understand this then the goal will be learning how to prepare the contents of an executable so that it encodes our programs!</p>
+<div style="background-color:powderblue;">
+<img style="margin: 1px 5px 0px 0px;" align="left" width="40" src="../images/fyi.svg"> 
+While we call it loading most modern operating systems use advanced techniques that allow it to avoid:
+    1. Having to have entire initial image in an executable. 
+    2. Needing to load the entire context when an executable is launched.  
+<p>Two of the techniques used are:  1) <a class="reference external" href="https://en.wikipedia.org/wiki/Dynamic_loading">Dynamic loading and linking</a> and 2) <a class="reference external" href="https://en.wikipedia.org/wiki/Memory_paging">Memory Paging</a>.</p>
+<p>Rather than having every executable contain an exact copy of it’s initial memory image, dynamic loading and linking allows the executable to only contain the parts of memory that are unique to the program.  Any common libraries of routines an executable uses are not in the executable.  Rather the executable simply includes a list of the libraries and routines it requires.  When creating a process for such a “dynamically linked” executable a dynamic loader-linker  will validate that the required files can be found.   It then ensures that as the process is run the values from the other file are added to the process context.  This approach has several nice properties.  The sizes of binaries are considerably smaller and it now possible to upgrade libraries and have new process, started from exiting binaries, automatically use them.</p>
+<p>The second technique, Memory Paging, refers to the OS using the <a class="reference external" href="https://en.wikipedia.org/wiki/Memory_management_unit">Memory Management Unit</a> facilities of the CPU to avoid having the entire  memory of a process context present in the computers physical memory.  Specifically, the OS uses hardware “paging” features to carve up a process context memory into chunks called pages.  At any given time the only pages that need to be present are the ones that the executing process is currently conducting memory transactions too.   The other pages, of currently schedule process and, non-schedule processes can be stored on I/O devices.  The OS then shuffles the pages in and out of main memory as needed.  Treating the main memory as a form a “cache” for the active pages of the running processes. This allows us to run many programs who’s “virtual” memory is larger than the physical memory of the computer.
+</div></p>
+<blockquote>
+<div><p><a class="reference internal" href="../_images/fyi.svg"><img alt="../_images/fyi.svg" class="align-left" src="../_images/fyi.svg" width="40" /></a> <p style="background-color:powderblue;"> <a class="reference external" href="https://en.wikipedia.org/wiki/System_virtual_machine">Virtual Machines</a> are an advanced scheme that uses CPU support to partition the computer so that multiple independent OS Kernels can be started.  Each believing it is running directly on the hardware and starting and managing it’s own processes.</p>
+</div></blockquote>
+</section>
+</section>
+<section id="creating-executables">
+<h2><span class="section-number">14.5. </span>Creating executables<a class="headerlink" href="#creating-executables" title="Permalink to this heading">#</a></h2>
+<p>Given the nature of von Neumann execution and what we know now, “Programming” a process means preparing an initial memory image in the form of an executable.<br />
+To do this we will use the two tools that are the foundation for constructing executables: an assembler and a linker.</p>
+<p>While many high level programming languages exist in the end to get something to execute it must be represent as binary values in memory. An assembler and linker are the base tools that provide programmers the to directly specifying what the contents of an executable should be.</p>
+<p>The rest of this chapter focuses on introducing these tools and how to practically use them to create an executable.  We will, however, defer our discussion of how to encode useful programs within executable to later chapters.  Rather, we will culminate this chapter with the ability to create an empty executable that will let us create a “blank” process.  While this process will not be useful on its own we will be able to use it with a  debugger to directly explore the internals of the CPU and memory of a process and learn how to use the <a class="reference internal" href="Debuggers.html"><span class="doc std std-doc">debugger as more than a debugger</span></a>.</p>
+<div class="cell tag_remove-input docutils container">
+</div>
+<section id="assemblers">
+<h3><span class="section-number">14.5.1. </span>Assemblers<a class="headerlink" href="#assemblers" title="Permalink to this heading">#</a></h3>
+<p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Assembly_language#Assembler">assembler</a> is a program that processes commands in a file that directs it to create fragments of memory contents.  The linker, discussed next, will combine these fragments according to a generic layout to create an executable.</p>
+<p>The code we write in the syntax of the assembler is assembly code and is a combination of CPU specific mnemonics and special assembler specific <strong>directives</strong> .  We write assembly code files in ASCII with an ASCII editor.  Traditionally on UNIX systems we use the suffix <code class="docutils literal notranslate"><span class="pre">.s</span></code> or <code class="docutils literal notranslate"><span class="pre">.S</span></code> for assembly code files.</p>
+<div class="cell tag_remove-input docutils container">
+</div>
+<p>As illustrated in the figure authors of the assembler use the CPU manufactures documentation to write the assembler.  The assembler is written to be able to translate the  CPU mnemonics, written in ASCII  into the CPU specific binary values that encode the specified instruction.</p>
+<p>The assembler directives allow us to write arbitrary values that should be placed in memory.  The assembler understands various formats (such as hex, binary, signed and unsigned integers, ASCII, etc) and sizes.  The assembler will convert the values we write, in the various formats, into the correct raw binary values that should be place in memory.  Directives also let us control both the relative and absolute placement of values.</p>
+<p>In addition to mnemonics and directives, assemblers allow a programmer to introduce symbolic human readable labels for the addresses of particular values.  The symbolic labels, or simply symbols, allow us within our assembly code to refer to the values at the location of the symbol.  It will be the linker’s job to both set the address for a label and replace the reference to the symbols address to the address it assigns to the symbol.</p>
+<p>Finally and by no means least the assembler allows us to provide comments that explain what our code is doing.  It is particularly important to carefully document assembly code given its cryptic nature.  It is not uncommon for the comments in an assembly file to far out number the actual code lines.</p>
+<p>Assuming that there is no errors in the assembly code, the assembler will translate our input file into what is called an <strong>object</strong> file.  This file, in general, will encode a sequence of values for both the <a class="reference internal" href="vonNeumannArchitecture.html"><span class="doc std std-doc">text and data</span></a>  of our program, however, the exact locations will not be specified.  In addition to the values the file can encode various descriptive facts so that the linker can connect up our code with code generated from other object files.  It can also contain information that can be saved in the final binary that other tools like the OS and debugger can use to understand what the bytes of the executable mean.  For example, it can contain debugger information that will allow the debugger to know what source code file and how the lines within it correspond to particular opcode bytes in memory.</p>
+<p>Traditionally assemblers can produce a “listing” file which is an ASCII document that describes the actions and output that the assembler took and produced while processing the input assembly source file.  The listing file can be very useful in understanding how you code we translate into byte values and what symbols it introduces and those that it references.</p>
+<p>As we progress we will understand more of the features and details of the assembler and its syntax through examples.  For the moment we are only concerned with a general understanding of it role and how.</p>
+<section id="gnu-assembler-gas">
+<h4><span class="section-number">14.5.1.1. </span>GNU Assembler (gas)<a class="headerlink" href="#gnu-assembler-gas" title="Permalink to this heading">#</a></h4>
+<p>The particular assembler that we will be using is the GNU Assembler (gas).  As stated before we will learn its basic syntax as we work through various examples.</p>
+<p>When we use gas to process INTEL mnemonics we will be using the mnemonic syntax that is compatible with the INTEL manuals.  There is another standard that was introduce by AT&amp;T, for writing INTEL mnemonics but was will avoid this syntax.</p>
+<p>The following is the manual for gas.  Section 3.5 describes statements which can be very helpful in learning to read and write gas assembly.</p>
+<div class="cell tag_remove-input docutils container">
+</div>
+</section>
+</section>
+<section id="linkers">
+<h3><span class="section-number">14.5.2. </span>Linkers<a class="headerlink" href="#linkers" title="Permalink to this heading">#</a></h3>
+<p>The process of constructing executables has purposefully been broken down into two steps to make it easier to construct programs out of a collection of code.   Specifically as we read above an assembler produces fragments of memory values called object files.</p>
+<p>The basic idea is that programmers  write various reusable chucks of assembly code that introduce data and text stored in object files.  The data and text from multiple object files can then be combined to produce a final executable by a <a class="reference external" href="https://en.wikipedia.org/wiki/Linker_(computing)">linker</a>.   Where the linker takes object files, libraries of object files and a generic description of how the text and data should be laid out, located in memory, to be compatible with the OS process model.</p>
+<div class="cell tag_remove-input docutils container">
+</div>
+<p>While this approach might seem unnecessarily complicated at first it make our lives as programmers much easier.    First it provides us with the ability to compose our programs out of our own libraries of code and code provided by others.  Secondly we don’t have to worry about where exactly everything ends up in memory.  Rather the linker will be given all the inputs including general directives for how to layout the text and data of an executable for it to be compatible with a  particular OS.  With all of these this as input it will organize the values of our code into a coherent image that has the text and data correctly laid out and all symbols and their references will be carefully connect.</p>
+<p>The operation of the linker may seem quite vague at this point.  In later chapters we will fill in the details when we discuss how memory gets assigned by the OS to a process context when “loading” an executable.</p>
+<section id="gnu-linker-ld">
+<h4><span class="section-number">14.5.2.1. </span>GNU Linker (ld)<a class="headerlink" href="#gnu-linker-ld" title="Permalink to this heading">#</a></h4>
+<p>Like the assembler the specific linker we will be using is the default linker used by the Linux Operating system, the GNU Linker (ld).  The following is the manual for ld.</p>
+<div class="cell tag_remove-input docutils container">
+</div>
+</section>
+</section>
+<section id="creating-and-using-our-first-executable">
+<h3><span class="section-number">14.5.3. </span>Creating and using our first executable.<a class="headerlink" href="#creating-and-using-our-first-executable" title="Permalink to this heading">#</a></h3>
+<p>Our goal now is to put all the pieces of this chapter together to create our first executable.   While it will be a valid executable that the OS can load, it will only contain a small number of bytes that will all be zero.  As such when we go to run it we don’t expect it to behave in a particularly useful way.<br />
+However, we will be able to use it with the debugger to explore the process that is created from the the binary. In some sense it is the simplest process we can create that has at least some initialized memory within it.</p>
+<section id="the-source-code">
+<h4><span class="section-number">14.5.3.1. </span>The source code<a class="headerlink" href="#the-source-code" title="Permalink to this heading">#</a></h4>
+<div class="cell tag_remove-input docutils container">
+</div>
+<p>The above code is the contents of a file we have named <code class="docutils literal notranslate"><span class="pre">empty.s</span></code>.  In reality it is not really empty but rather contains four bytes of zero.</p>
+<p>This code has been extensively commented so that we can use it to learn a little about the assembly syntax and what it lets us do.
+In general, as said before, it is good practice to write lots of
+comments in your assembly code.  The following is an un-commented version:</p>
+<div class="highlight-gas notranslate"><div class="highlight"><pre><span></span><span class="w">    </span><span class="na">.intel_syntax</span><span class="w"> </span><span class="no">noprefix</span>
+<span class="w">    </span><span class="na">.text</span><span class="w"> </span>
+<span class="w">    </span><span class="no">.global</span><span class="w"> </span><span class="no">_start</span>
+<span class="nl">_start:</span><span class="w"> </span>
+<span class="w">    </span><span class="na">.byte</span><span class="w"> </span><span class="mi">0x00</span><span class="p">,</span><span class="w"> </span><span class="mi">0x00</span><span class="p">,</span><span class="w"> </span><span class="mi">0x00</span><span class="p">,</span><span class="w"> </span><span class="mi">0x00</span>
+<span class="w">    </span><span class="na">.byte</span><span class="w"> </span><span class="mi">0x00</span><span class="p">,</span><span class="w"> </span><span class="mi">0x00</span><span class="p">,</span><span class="w"> </span><span class="mi">0x00</span><span class="p">,</span><span class="w"> </span><span class="mi">0x00</span>
+</pre></div>
+</div>
+<p>As described the keywords that start with <code class="docutils literal notranslate"><span class="pre">.</span></code> are directives.  The assembler does not attempt to interpret them as CPU mnemonics.  Rather
+they are various command that control how the assembler behaves.</p>
+<p>Unsurprisingly, the first statement, <code class="docutils literal notranslate"><span class="pre">.intel_syntax</span> <span class="pre">noprefix</span></code>, tells the assembler
+that we want to use the INTEL syntax for writing mnemonics.  The next statement <code class="docutils literal notranslate"><span class="pre">.text</span></code> is a “section” directive, more verbosely it could have been written
+<code class="docutils literal notranslate"><span class="pre">.section</span> <span class="pre">.text</span></code>.  It tells the assembler to let the linker know that any values that follow belong with the text values of the final binary.  If we want to put values in other sections, such as data we would then switch sections.  The next line <code class="docutils literal notranslate"><span class="pre">.global</span> <span class="pre">_start</span></code> tells the assembler to place the symbolic label that is introduced on the following in the list of “external” symbols that this object file is making visible to the other object files.  The reason we do this is due to a requirement that every executable needs to define a symbol that tells the OS how to initialize the PC when it creates a new process context from the executable.  This symbol is call the entry point.   On Linux the default symbol the linker looks for as the entry point is <code class="docutils literal notranslate"><span class="pre">_start</span></code>.  So in combination the two lines say that file is defining an externally visible symbol <code class="docutils literal notranslate"><span class="pre">_start</span></code> and defines it to be the location of the values that follow.  Since we have not inserted any values yet we are still at the beginning of the text memory that this object file defines.</p>
+<p>The next two lines define raw hex byte sized values that we want to place into the memory object.  The <code class="docutils literal notranslate"><span class="pre">.byte</span></code> directive expects us to list one more comma separated values that the assembler will translate into binary values and place in the object file.  The assembler understands many formats for the values.
+In our case we are using hex notation and simply specify eight bytes all zero valued.  Each byte moves the insertion point to the next offset relative to the current section.  As such these two lines tell the assembler that we want this object file to contribute 8 zero value bytes to the text values of the final linked executable.</p>
+</section>
+<section id="assembling-the-source-into-an-object-file">
+<h4><span class="section-number">14.5.3.2. </span>Assembling the source into an object file<a class="headerlink" href="#assembling-the-source-into-an-object-file" title="Permalink to this heading">#</a></h4>
+<p>The following invocation of the assembler will translate the <code class="docutils literal notranslate"><span class="pre">empty.s</span></code> into <code class="docutils literal notranslate"><span class="pre">empty.o</span></code>.  The <code class="docutils literal notranslate"><span class="pre">-g</span></code> flag tells the assembler to keep information in the object file that the debugger can use.  The <code class="docutils literal notranslate"><span class="pre">-o</span> <span class="pre">empty</span></code> tells the assembler what the name of the output object file it should create.</p>
+<div class="cell tag_remove-input docutils container">
+</div>
+<p>Using <code class="docutils literal notranslate"><span class="pre">ls</span></code> we see that indeed the assembler created a file called <code class="docutils literal notranslate"><span class="pre">empty.o</span></code>.  Note it is quite a bit bigger than the 8 bytes that we want loaded into memory.  That is because there is lots of extra information that must be put into an object file so that link knows how to work with it.</p>
+<div class="cell tag_remove-input docutils container">
+</div>
+</section>
+<section id="linking-the-object-file-into-an-executable">
+<h4><span class="section-number">14.5.3.3. </span>Linking the object file into an executable<a class="headerlink" href="#linking-the-object-file-into-an-executable" title="Permalink to this heading">#</a></h4>
+<p>While we only have one object file that composes our binary we will need to have the linker process the object file and convert it into a executable object file.  The <code class="docutils literal notranslate"><span class="pre">ld</span></code> has built into a file called the link script that describes where thinks, like the text and data of the executable files need to go to be compatible with the OS, Linux in our case.  This includes encoding the address where the <code class="docutils literal notranslate"><span class="pre">_start</span></code> symbol gets place as the entry point for the binary.</p>
+<p>The following is the command to link our single object file into an executable.  Again note that we pass ld <code class="docutils literal notranslate"><span class="pre">-g</span></code> flag also telling it to generate and keep information for the debugger in the executable.</p>
+<div class="cell tag_remove-input docutils container">
+</div>
+<p>Using ls again we see that the linker produced the executable <code class="docutils literal notranslate"><span class="pre">empty</span></code> as directed by the <code class="docutils literal notranslate"><span class="pre">-o</span> <span class="pre">empty</span></code> argument.</p>
+<div class="cell tag_remove-input docutils container">
+</div>
+<p>Notice this time it does have the execute permissions set.</p>
+</section>
+<section id="running-the-executable">
+<h4><span class="section-number">14.5.3.4. </span>Running the executable<a class="headerlink" href="#running-the-executable" title="Permalink to this heading">#</a></h4>
+<p>Ok lets run it.</p>
+<div class="cell tag_remove-input docutils container">
+</div>
+</section>
+<section id="segmentation-fault">
+<h4><span class="section-number">14.5.3.5. </span>Segmentation Fault<a class="headerlink" href="#segmentation-fault" title="Permalink to this heading">#</a></h4>
+<p>The message <code class="docutils literal notranslate"><span class="pre">Segmentation</span> <span class="pre">fault</span></code> indicates that the kernel informed the shell that the kernel terminated the process that it started to run the <code class="docutils literal notranslate"><span class="pre">empty</span></code> executable.  Specifically the kernel told the shell that empty did an “Invalid memory reference” and so the kernel terminated the process.  An invalid memory reference means that the process trying to do a memory transaction to an address that did not have valid memory associated with it.</p>
+<p>In later chapters we will discuss why memory is invalid an how to create valid memory.  For the moment it suffices to say that an memory that our process will have needed to be defined by the executable.  An in our case we only created 8 bytes of memory we knew was valid.</p>
+<p>The real use of the empty binary is that it allows us to create a very simple process that we can use the debugger with.</p>
+</section>
+<section id="using-empty-with-gdb">
+<h4><span class="section-number">14.5.3.6. </span>Using empty with gdb<a class="headerlink" href="#using-empty-with-gdb" title="Permalink to this heading">#</a></h4>
+<p>In the following session we use gdb to create a process and then explore, modify and execute an instruction within it.  Other chapters will go into the details this is just to give us a flavor of how we can use gdb to explore the relationships between an executable and a process created from it.</p>
+<p>The following is an explanation for what is was done</p>
+<ol class="arabic simple">
+<li><p>set the disassembly syntax of gdb to intel</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">disassembly-flavor</span> <span class="pre">intel</span></code></p></li>
+</ul>
+</li>
+<li><p>open the empty assembly file</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">file</span> <span class="pre">empty</span></code></p></li>
+</ul>
+</li>
+<li><p>We can now printf explore the values within the executable This includes finding out where a symbol got located including our entry point</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">/x</span> <span class="pre">&amp;_start</span></code></p></li>
+</ul>
+</li>
+<li><p>Before we start a process we want to have gdb freeze it before any instructions within it execute. So we set a break point at the address of the entry point.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">&amp;_start</span></code></p></li>
+</ul>
+</li>
+<li><p>Ok let’s start a process from the open executable</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">run</span></code></p></li>
+</ul>
+</li>
+<li><p>At this point the a process has been created but it is frozen at the breakpoint and we can control it from gdb. We can print information about it
+<code class="docutils literal notranslate"><span class="pre">info</span> <span class="pre">proc</span></code></p></li>
+<li><p>We can look at it’s registers
+<code class="docutils literal notranslate"><span class="pre">info</span> <span class="pre">registers</span></code></p></li>
+<li><p>We can work with individual registers</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">/x</span> <span class="pre">$rax</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">/t</span> <span class="pre">$rax</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">/d</span> <span class="pre">$rax</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">/x</span> <span class="pre">$rip</span></code></p></li>
+</ul>
+</li>
+<li><p>We can examine memory</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x/8xb</span> <span class="pre">0x401000</span></code></p></li>
+</ul>
+</li>
+<li><p>We can even ask gdb to disassemble memory</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">x/2i</span> <span class="pre">&amp;_start</span></code></p></li>
+</ul>
+</li>
+<li><p>We can also write new values into memory. Lets uses this this ability to replace some of our zeros with the values that encode an instruction : <code class="docutils literal notranslate"><span class="pre">popcnt</span> <span class="pre">rbx,</span> <span class="pre">rax</span></code>. Each time we add a new value we will ask gdb to display the memory and to disassemble what it finds there so we can see our progress.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">{unsigned</span> <span class="pre">char}&amp;_start</span> <span class="pre">=</span> <span class="pre">0xF3</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x/5xb</span> <span class="pre">&amp;_start</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x/1i</span> <span class="pre">&amp;_start</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">{unsigned</span> <span class="pre">char}(&amp;_start+1)</span> <span class="pre">=</span> <span class="pre">0x48</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x/5xb</span> <span class="pre">&amp;_start</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x/1i</span> <span class="pre">&amp;_start</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">{unsigned</span> <span class="pre">char}(&amp;_start+2)</span> <span class="pre">=</span> <span class="pre">0x0F</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x/5xb</span> <span class="pre">&amp;_start</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x/1i</span> <span class="pre">&amp;_start</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">{unsigned</span> <span class="pre">char}(&amp;_start+3)</span> <span class="pre">=</span> <span class="pre">0xB8</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x/5xb</span> <span class="pre">&amp;_start</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x/1i</span> <span class="pre">&amp;_start</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">{unsigned</span> <span class="pre">char}(&amp;_start+4)</span> <span class="pre">=</span> <span class="pre">0xD8</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x/5xb</span> <span class="pre">&amp;_start</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x/1i</span> <span class="pre">&amp;_start</span></code></p></li>
+</ul>
+</li>
+<li><p>Cool those five bytes to encode the instruction we want. Lets display those bytes in various other forms</p>
+<ul class="simple">
+<li><p>In binary notation: <code class="docutils literal notranslate"><span class="pre">x/5tb</span> <span class="pre">_start</span></code></p></li>
+<li><p>As signed decimal numbers: <code class="docutils literal notranslate"><span class="pre">x/5db</span> <span class="pre">_start</span></code></p></li>
+<li><p>As unsigned decimal numbers: <code class="docutils literal notranslate"><span class="pre">x/5ub</span> <span class="pre">_start</span></code></p></li>
+</ul>
+</li>
+<li><p>Lets display the current contents of the two register that our instruction uses an operands</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">p/x</span> <span class="pre">{$rax,</span> <span class="pre">$rbx}</span></code></p></li>
+</ul>
+</li>
+<li><p>Before we execute the instruction lets remove the break point to make our life easier</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">delete</span></code>
+15 We can use gdb to execute one instruction at a time</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stepi</span></code></p></li>
+</ul>
+</li>
+<li><p>Lets look to see if the registers have changed</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">p/x</span> <span class="pre">{$rax,</span> <span class="pre">$rbx}</span></code></p></li>
+</ul>
+</li>
+<li><p>Lets try again but lets put a value in rax</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">$rax</span> <span class="pre">=</span> <span class="pre">0b1011</span></code></p></li>
+</ul>
+</li>
+<li><p>Again we print the value of the registers to be sure we know what values are in them before we execute the instruction</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">p/x</span> <span class="pre">{$rax,</span> <span class="pre">$rbx}</span></code></p></li>
+</ul>
+</li>
+<li><p>Remember the pc tells us where the next instruction is</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">p</span> <span class="pre">/x</span> <span class="pre">$pc</span></code></p></li>
+</ul>
+</li>
+<li><p>So we need to reset it back to the address we placed the instruction which was the address of <code class="docutils literal notranslate"><span class="pre">_start</span></code></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">set</span> <span class="pre">$pc</span> <span class="pre">=</span> <span class="pre">$_start</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">stepi</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">p/x</span> <span class="pre">{$rax,</span> <span class="pre">$rbx}</span></code></p></li>
+</ul>
+</li>
+</ol>
+<p>Cool rbx now has the number of bits set to one that the value in rax has – its “population count”</p>
+<div class="cell tag_output_scroll tag_remove-input docutils container">
+</div>
+</section>
+</section>
+<section id="the-code-to-create-an-executable-for-a-larger-empty-process">
+<h3><span class="section-number">14.5.4. </span>The code to create an executable for a larger empty process<a class="headerlink" href="#the-code-to-create-an-executable-for-a-larger-empty-process" title="Permalink to this heading">#</a></h3>
+<p>The following code replaces the two lines of <code class="docutils literal notranslate"><span class="pre">.byte</span></code> directives with a single <code class="docutils literal notranslate"><span class="pre">.fill</span></code> directive that inserts in this case 256 zero valued bytes into memory at <code class="docutils literal notranslate"><span class="pre">_start</span></code></p>
+<div class="cell tag_remove-input docutils container">
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./assembly"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="vonNeumannArchitecture.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><span class="section-number">13. </span>The von Neumann Architecture</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Debuggers.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><span class="section-number">15. </span>Machine Debuggers &amp; Open Process Surgery</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-executables">14.1. “Running” Executables</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-s-inside-an-executable">14.2. What’s inside an executable</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-does-ls-tell-us-about-ls">14.2.1. What does ls tell us about ls ;-)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#can-we-display-its-contents-to-the-terminal-with-cat">14.2.2. Can we display its contents to the Terminal with <code class="docutils literal notranslate"><span class="pre">cat</span></code>?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lets-look-at-the-byte-values-of-bin-ls-using-xxd">14.2.3. Lets look at the byte values of <code class="docutils literal notranslate"><span class="pre">/bin/ls</span></code> using <code class="docutils literal notranslate"><span class="pre">xxd</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-the-unix-file-command-on-bin-ls">14.2.4. Using the UNIX <code class="docutils literal notranslate"><span class="pre">file</span></code> command on <code class="docutils literal notranslate"><span class="pre">/bin/ls</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#elf-files-executable-and-linking-format-files">14.2.5. ELF Files - Executable and Linking Format Files</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#executing-an-executable-in-a-process">14.3. Executing an Executable in a Process</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-executables-as-process-images">14.4. Binary Executables as Process Images.</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#process-contexts">14.4.1. Process Contexts</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#context-switch-scheduling-processes">14.4.1.1. Context Switch – Scheduling Processes</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#executables-initial-images-for-creating-process-contexts">14.4.2. Executables: Initial Images for creating Process Contexts</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-executables">14.5. Creating executables</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#assemblers">14.5.1. Assemblers</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gnu-assembler-gas">14.5.1.1. GNU Assembler (gas)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linkers">14.5.2. Linkers</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#gnu-linker-ld">14.5.2.1. GNU Linker (ld)</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-and-using-our-first-executable">14.5.3. Creating and using our first executable.</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#the-source-code">14.5.3.1. The source code</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#assembling-the-source-into-an-object-file">14.5.3.2. Assembling the source into an object file</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#linking-the-object-file-into-an-executable">14.5.3.3. Linking the object file into an executable</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#running-the-executable">14.5.3.4. Running the executable</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#segmentation-fault">14.5.3.5. Segmentation Fault</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#using-empty-with-gdb">14.5.3.6. Using empty with gdb</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-code-to-create-an-executable-for-a-larger-empty-process">14.5.4. The code to create an executable for a larger empty process</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Jonathan Appavoo
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  <p class="copyright">
+    
+      © Copyright 2021.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
