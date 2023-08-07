@@ -1,5 +1,5 @@
 <!-- #region -->
-Under the Covers : The Secret Life of Software
+CS 350 - Fundamentals of Computing Systems
 =====================================
 
 In this book we will look under the covers to learn exactly what software is and how it works. Our goal is to allow a reader to learn concepts and practical skills that will help them understand and participate in the digital world.   We will dissect how software and computers work so that the reader can understand the underlying ideas and mechanisms of computing technologies, revealing both beauty and ugliness. 

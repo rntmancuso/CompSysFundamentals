@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Under the Covers : The Secret Life of Software &#8212; UndertheCovers</title>
+    <title>CS 350 - Fundamentals of Computing Systems &#8212; UndertheCovers</title>
   
   
   
@@ -153,7 +153,7 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1 current active">
                 <a class="reference internal" href="#">
-                    Under the Covers : The Secret Life of Software
+                    CS 350 - Fundamentals of Computing Systems
                 </a>
             </li>
         </ul>
@@ -397,7 +397,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Under the Covers : The Secret Life of Software</h1>
+    <h1>CS 350 - Fundamentals of Computing Systems</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -420,8 +420,8 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <!-- #region -->
-<section class="tex2jax_ignore mathjax_ignore" id="under-the-covers-the-secret-life-of-software">
-<h1>Under the Covers : The Secret Life of Software<a class="headerlink" href="#under-the-covers-the-secret-life-of-software" title="Permalink to this heading">#</a></h1>
+<section class="tex2jax_ignore mathjax_ignore" id="cs-350-fundamentals-of-computing-systems">
+<h1>CS 350 - Fundamentals of Computing Systems<a class="headerlink" href="#cs-350-fundamentals-of-computing-systems" title="Permalink to this heading">#</a></h1>
 <p>In this book we will look under the covers to learn exactly what software is and how it works. Our goal is to allow a reader to learn concepts and practical skills that will help them understand and participate in the digital world.   We will dissect how software and computers work so that the reader can understand the underlying ideas and mechanisms of computing technologies, revealing both beauty and ugliness.</p>
 <p>We will learn how hardware and software are broken down and organized. Learning the generic models that apply to most modern computers.   We will see how physical devices are turned into a blank canvas on which humans paint information as collections of binary bits.  Learning how different types of data are represented and how programs themselves are represented.  We will build our way to understanding how layers of software are fitted together to allow more complex information and ideas, not natively supported by the hardware, to be represented and worked with.
 Understanding this process will reveal to us how the layers make it simpler and simpler for humans to program computers and the limits and overheads that comes along with the layering.</p>
